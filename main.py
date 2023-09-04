@@ -41,7 +41,7 @@ def average_mapper(map: dict, decimals: int):
   count = {}
   average = {}
   for key in map:
-    key2 = round(key)
+    key2 = math.ceil(key)
     if key2 >= 360:
       break
     if key2 in count:
@@ -56,23 +56,30 @@ def average_mapper(map: dict, decimals: int):
     average[key] = round(average[key] / count[key], decimals)
   return average
 
-def print_map(map: dict, diff: int = 1):
+def print_map(map: dict, diff: int):
   for key in map:
     if key % diff == 0:
       print("{}°\t-> {}".format(key, map[key]))
 
 def calculate(a: int, decimals: int):
+  os.system('cls')
   print("Maping Angles...")
   map = angle_mapper(a, decimals)
+  os.system('cls')
   print("Calculating Distances...")
   map = distance_mapper(a, map)
+  os.system('cls')
   print("Optimizing...")
   map = average_mapper(map, decimals)
-  print_map(map)
+  return map
 
 while True:
   os.system('cls')
   print("Enter radius: ", end = '')
   radius = int(input())
-  calculate(radius, 2)
+  print("Enter angle delta: ", end = '')
+  delta = int(input())
+  map = calculate(radius, 2)
+  os.system('cls')
+  print_map(map, delta)
   input()
